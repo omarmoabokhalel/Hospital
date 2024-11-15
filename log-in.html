@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tech</title>
+    <link rel="stylesheet" href="log-in.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="HealthTech Logo">
+            <h2>HealthTech</h2>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="appointment.html">Appointment</a></li>
+                <li><a href="result.html">Results</a></li>
+                <li><a href="education.php">Education</a></li>
+                <li><a href="detail.html">Details</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <a href="log-in.html" class="get-started">log in</a>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <div class="cont-text">
+                <h2>Welcome Back!</h2>
+                <h5>Start your health care journey today.</h5>
+            </div>
+
+            <form id="loginForm" method="POST" action="log-in.php">
+                <div class="email">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                </div>
+
+                <div class="pass">
+                    <input type="password" name="password" placeholder="Password" required> <!-- إضافة name للـ password -->
+                </div>
+
+                <div class="cont-for">
+                    <div class="keep-log">
+                        <input type="checkbox" name="Keep in log in" id="keep">
+                        <label for="keep">keep in log in</label>
+                    </div>
+
+                    <div class="for-get">
+                        <a href="#for-get">Forget your Password ?</a>
+                    </div>
+                </div>
+
+                <div class="log-in">
+                    <input type="submit" value="Log in">
+                </div>
+
+                <div class="container-hr">
+                    <hr class="hr-text" data-content="OR">
+                </div>
+            </form>
+
+            <div class="google-icon">
+                <div class="google">
+                    <button><i class="fa-brands fa-google"></i><a href="#google">Log in with Google</a></button>
+                </div>
+            </div>
+
+            <div class="agree">
+                <h5>By signing up, you agree to the Terms & Conditions and Privacy Policy</h5>
+            </div>
+
+            <div class="container-hr and">
+                <hr class="hr-text" data-content="Do not have an account">
+            </div>
+
+            <div class="register">
+                <a href="sign up/sign-up.html">Create new account</a>
+            </div>
+        </div>
+
+        <div class="doctor-img">
+            <img src="images/log-in-img.png" alt="">
+        </div>
+    </div>
+</body>
+</html>

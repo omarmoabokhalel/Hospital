@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tech - Education</title>
+    <link rel="stylesheet" href="education.css">
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff20;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h2 {
+            margin-left: 10px;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .get-started {
+            padding: 10px 20px;
+            background-color: #24a1d7;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        section {
+            position: absolute;
+            
+       
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: flex-end;
+            position: absolute;
+            right: 50px;
+        }
+
+        .search {
+            text-align: right;
+        }
+
+        .search h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .search-ic input {
+            width: 350px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-ic input:focus {
+            border-color: #24a1d7;
+            outline: none;
+        }
+
+        .search button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #24a1d7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="HealthTech Logo" height="50">
+            <h2>HealthTech</h2>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="appointment.html">Appointment</a></li>
+                <li><a href="result.html">Results</a></li>
+                <li class="home"><a href="education.htm">Education</a></li>
+                <li ><a href="detail.html">Details</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <a href="log-in.html" class="get-started">Log in</a>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="search">
+                <h2>Search for Health Information</h2>
+                <div class="search-ic">
+                    <input type="text" id="searchBar" placeholder="Enter a disease">
+                </div>
+                <button onclick="searchDisease()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function searchDisease() {
+            var query = document.getElementById('searchBar').value.toLowerCase();
+            
+            if (query === 'diabetes' || query === 'مرض السكر') {
+                window.location.href = 'https://www.who.int/news-room/fact-sheets/detail/diabetes'; // رابط لمعلومات عن السكري
+            } else if (query === 'hypertension' || query === 'ضغط الدم') {
+                window.location.href = 'https://www.who.int/news-room/fact-sheets/detail/hypertension'; // رابط لمعلومات عن ضغط الدم
+            } else if (query === 'covid-19' || query === 'كورونا') {
+                window.location.href = 'https://www.who.int/health-topics/coronavirus#tab=tab_1'; // رابط لمعلومات عن كورونا
+            } else if (query === 'cancer' || query === 'السرطان') {
+                window.location.href = 'https://www.who.int/health-topics/cancer#tab=tab_1'; // رابط لمعلومات عن السرطان
+            } else {
+                alert('Please enter a valid disease.');
+            }
+        }
+    </script>
+    
+
+</body>
+</html>

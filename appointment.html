@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tech</title>
+    <link rel="stylesheet" href="appointments.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        // Fetch and populate hospitals when the page loads
+        // Fetch and populate hospitals when the page loads
+window.onload = function() {
+    fetch('get_hospitals.php')
+        .then(response => response.json())
+        .then(data => {
+            const hospitalSelect = document.querySelector('select[name="hospital"]');
+            data.forEach(hospital => {
+                const option = document.createElement('option');
+                option.value = hospital;
+                option.textContent = hospital;
+                hospitalSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching hospitals:', error));
+};
+
+// Update specialties based on the selected hospital
+function updateSpecialties() {
+    const hospitalSelect = document.querySelector('select[name="hospital"]');
+    const selectedHospital = hospitalSelect.value;
+
+    // Clear the doctor select and specialty select
+    const specialtySelect = document.querySelector('select[name="specialty"]');
+    specialtySelect.innerHTML = '<option value="" disabled selected>Select a Specialty</option>'; // Reset specialties
+    const doctorSelect = document.querySelector('select[name="doctor"]');
+    doctorSelect.innerHTML = '<option value="" disabled selected>Select a Doctor</option>'; // Reset doctors
+
+    fetch(`get_specialties.php?hospital=${encodeURIComponent(selectedHospital)}`)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(specialty => {
+                const option = document.createElement('option');
+                option.value = specialty;
+                option.textContent = specialty;
+                specialtySelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching specialties:', error));
+}
+
+// Update doctors based on the selected hospital and specialty
+// Update doctors based on the selected hospital and specialty
+function updateDoctors() {
+    const hospitalSelect = document.querySelector('select[name="hospital"]');
+    const specialtySelect = document.querySelector('select[name="specialty"]');
+    const selectedHospital = hospitalSelect.value;
+    const selectedSpecialty = specialtySelect.value;
+
+    // Clear the doctor select before fetching new doctors
+    const doctorSelect = document.querySelector('select[name="doctor"]');
+    doctorSelect.innerHTML = '<option value="" disabled selected>Select a Doctor</option>'; // Reset doctors
+
+    if (selectedHospital && selectedSpecialty) { // Only fetch doctors if both hospital and specialty are selected
+        fetch(`get_doctors.php?hospital=${encodeURIComponent(selectedHospital)}&specialty=${encodeURIComponent(selectedSpecialty)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.name;
+                    option.textContent = doctor.name;
+                    doctorSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching doctors:', error));
+    }
+}
+
+
+
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="HealthTech Logo">
+            <h2>HealthTech</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li class="home"><a href="appointment.html">Appointment</a></li>
+                <li><a href="result.html">Results</a></li>
+                <li><a href="education.php">Education</a></li>
+                <li><a href="detail.html">Details</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <a href="log-in.html" class="get-started">Log in</a>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <form action="appointment.php" method="POST">
+                <div class="fr-name">
+                    <input type="text" name="first_name" placeholder="Name" required>
+                </div>
+
+                <div class="phone">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                
+                <div class="phone">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                </div>
+
+                <div class="phone">
+                    <input type="text" name="national_id" placeholder="National ID" maxlength="14" required>
+                </div>
+
+                <div class="phone">
+                    <input type="number" name="age" placeholder="Age" required>
+                </div>
+
+                <div class="phone">
+                    <select name="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="ls-namee">
+                    <select name="hospital" required onchange="updateSpecialties()">
+                        <option value="" disabled selected>Select a Hospital</option>
+                        <!-- Options will be added dynamically using JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="ls-namee">
+                    <select name="specialty" required onchange="updateDoctors()">
+                        <option value="" disabled selected>Select a Specialty</option>
+                        <!-- Options will be populated dynamically by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="pass">
+                    <select name="doctor" required>
+                        <option value="" disabled selected>Select a Doctor</option>
+                        <!-- Options will be populated dynamically by JavaScript -->
+                    </select>
+                </div>
+                
+                
+
+
+                <div class="pass">
+                    <input type="datetime-local" name="appointment_date" required>
+                </div>
+
+                <div class="log-in">
+                    <input type="submit" value="Book Appointment">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tech</title>
+    <link rel="stylesheet" href="details.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .location {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        select, button {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .submit input {
+            background-color: #24a1d7;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .hospital-details {
+            margin: 20px auto;
+            max-width: 600px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            background-color: #f9f9f9;
+        }
+        .hospital-details table {
+            width: 100%;
+        }
+        .hospital-details th, .hospital-details td {
+            padding: 10px;
+            text-align: right;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="HealthTech Logo">
+            <h2>HealthTech</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="appointment.html">Appointment</a></li>
+                <li><a href="result.html">Results</a></li>
+                <li><a href="education.php">Education</a></li>
+                <li class="home"><a href="detail.html">Details</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <a href="log-in.html" class="get-started">Log in</a>
+    </header>
+
+    <main>
+        <div class="container-hospital">
+            <form>
+                <div class="location">
+                    <!-- اختيار المحافظة -->
+                    <select id="governorate" onchange="loadCenters()">
+                        <option value="">-- اختر المحافظة --</option>
+                    </select>
+
+                    <!-- اختيار المركز -->
+                    <select id="center" onchange="loadHospitals()">
+                        <option value="">-- اختر المركز --</option>
+                    </select>
+
+                    <!-- اختيار المستشفى -->
+                    <select id="hospital">
+                        <option value="">-- اختر المستشفى --</option>
+                    </select>
+                </div>
+
+                <div class="submit">
+                    <input type="button" value="عرض التفاصيل" onclick="showHospitalDetails()">
+                </div>
+            </form>
+
+            <!-- تفاصيل المستشفى -->
+            <div class="hospital-details" id="hospitalDetails"></div>
+        </div>
+    </main>
+
+    <script>
+        // تحميل المحافظات عند تحميل الصفحة
+        $(document).ready(function () {
+            $.ajax({
+                url: 'details.php',
+                method: 'POST',
+                data: { type: 'governorates' },
+                success: function (response) {
+                    $('#governorate').html(response);
+                }
+            });
+        });
+
+        // تحميل المراكز بناءً على المحافظة المختارة
+        function loadCenters() {
+            var governorate = $('#governorate').val();
+            $.ajax({
+                url: 'details.php',
+                method: 'POST',
+                data: { type: 'centers', governorate: governorate },
+                success: function (response) {
+                    $('#center').html(response);
+                    $('#hospital').html('<option value="">-- اختر المستشفى --</option>');
+                }
+            });
+        }
+
+        // تحميل المستشفيات بناءً على المركز المختار
+        function loadHospitals() {
+            var center = $('#center').val();
+            $.ajax({
+                url: 'details.php',
+                method: 'POST',
+                data: { type: 'hospitals', center: center },
+                success: function (response) {
+                    $('#hospital').html(response);
+                }
+            });
+        }
+
+        // عرض تفاصيل المستشفى
+        function showHospitalDetails() {
+            var hospitalName = $('#hospital').val();
+            if (hospitalName) {
+                $.ajax({
+                    url: 'details.php',
+                    method: 'POST',
+                    data: { type: 'hospitalDetails', hospital: hospitalName },
+                    success: function (response) {
+                        $('#hospitalDetails').html(response).show();
+                    }
+                });
+            } else {
+                alert('من فضلك اختر مستشفى لعرض التفاصيل');
+            }
+        }
+    </script>
+</body>
+</html>
